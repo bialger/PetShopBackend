@@ -1,0 +1,42 @@
+spring:
+  application:
+    name: gateway-service
+  config:
+    import: optional:file:.env[.properties]
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+  datasource:
+    url: jdbc:postgresql://localhost:7432/users_db
+    username: postgres
+    password: password
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+    locations: classpath:db-users
+
+server:
+  port: 8080
+
+app:
+  messaging:
+    exchange-name: "x.petshop"
+    queues:
+      owners-request: "q.owners.requests"
+      pets-request: "q.pets.requests"
+      gateway-replies: "q.gateway.replies"
+    routing-keys:
+      owners-request: "rk.owners.requests"
+      pets-request: "rk.pets.requests"
+      gateway-replies: "rk.gateway.replies"

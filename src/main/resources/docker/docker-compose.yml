@@ -1,0 +1,66 @@
+services:
+  users-db:
+    image: postgres:15-alpine
+    container_name: users-db
+    ports:
+      - "7432:5432"
+    environment:
+      POSTGRES_DB: users_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+    volumes:
+      - users_db_data:/var/lib/postgresql/data
+    networks:
+      - petshop_network
+
+  owners-db:
+    image: postgres:15-alpine
+    container_name: owners-db
+    ports:
+      - "7433:5432"
+    environment:
+      POSTGRES_DB: owners_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+    volumes:
+      - owners_db_data:/var/lib/postgresql/data
+    networks:
+      - petshop_network
+
+  pets-db:
+    image: postgres:15-alpine
+    container_name: pets-db
+    ports:
+      - "7434:5432"
+    environment:
+      POSTGRES_DB: pets_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+    volumes:
+      - pets_db_data:/var/lib/postgresql/data
+    networks:
+      - petshop_network
+
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq/
+    networks:
+      - petshop_network
+
+volumes:
+  users_db_data:
+  owners_db_data:
+  pets_db_data:
+  rabbitmq_data:
+
+networks:
+  petshop_network:
+    driver: bridge
