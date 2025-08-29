@@ -13,21 +13,19 @@ repositories {
     mavenCentral()
 }
 
-ext {
-    set("mapstructVersion", "1.5.5.Final")
-    set("lombokVersion", "1.18.30")
-    set("springdocVersion", "2.3.0")
-}
+val mapstructVersion = "1.5.5.Final"
+val lombokVersion = "1.18.38"
+val springdocVersion = "2.3.0"
 
 dependencyManagement {
     imports {
         mavenBom("org.springframework.boot:spring-boot-dependencies:3.2.3")
     }
     dependencies {
-        dependency("org.mapstruct:mapstruct:${ext.get("mapstructVersion")}")
-        dependency("org.mapstruct:mapstruct-processor:${ext.get("mapstructVersion")}")
-        dependency("org.projectlombok:lombok:${ext.get("lombokVersion")}")
-        dependency("org.springdoc:springdoc-openapi-starter-webmvc-ui:${ext.get("springdocVersion")}")
+        dependency("org.mapstruct:mapstruct:${mapstructVersion}")
+        dependency("org.mapstruct:mapstruct-processor:${mapstructVersion}")
+        dependency("org.projectlombok:lombok:${lombokVersion}")
+        dependency("org.springdoc:springdoc-openapi-starter-webmvc-ui:${springdocVersion}")
     }
 }
 
@@ -50,6 +48,9 @@ dependencies {
     implementation("org.mapstruct:mapstruct")
     compileOnly("org.projectlombok:lombok")
     annotationProcessor("org.projectlombok:lombok")
+    testCompileOnly("org.projectlombok:lombok")
+    testAnnotationProcessor("org.projectlombok:lombok")
+    runtimeOnly("org.projectlombok:lombok")
     annotationProcessor("org.mapstruct:mapstruct-processor")
 
     implementation("org.springframework.boot:spring-boot-starter-security")
