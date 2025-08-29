@@ -28,6 +28,8 @@ bin/
 
 ### VS Code ###
 .vscode/
+.history/
+.gradle-dist/
 
 ### Mac OS ###
 .DS_Store
