@@ -25,16 +25,27 @@ jobs:
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v4
         with:
+          gradle-version: 8.7
           cache-read-only: ${{ github.event_name == 'pull_request' }}
 
       - name: Make gradlew executable
         run: chmod +x gradlew
 
-      - name: Verify Gradle wrapper
-        run: ./gradlew --version
+      - name: Verify Gradle version
+        run: |
+          echo "System Gradle version:"
+          gradle --version
+          echo "Wrapper Gradle version:"
+          ./gradlew --version
 
       - name: Clean build and tests
-        run: ./gradlew --no-daemon clean build
+        run: |
+          if ./gradlew --no-daemon clean build; then
+            echo "Build successful with wrapper"
+          else
+            echo "Wrapper failed, trying system Gradle"
+            gradle --no-daemon clean build
+          fi
         env:
           CI: true
 

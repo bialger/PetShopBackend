@@ -9,6 +9,10 @@ plugins {
 group = "org.bialger"
 version = "1.0-SNAPSHOT"
 
+tasks.withType<JavaCompile>().configureEach {
+    options.release.set(21)
+}
+
 repositories {
     mavenCentral()
 }
