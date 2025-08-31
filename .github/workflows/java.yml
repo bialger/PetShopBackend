@@ -30,6 +30,9 @@ jobs:
       - name: Make gradlew executable
         run: chmod +x gradlew
 
+      - name: Verify Gradle wrapper
+        run: ./gradlew --version
+
       - name: Clean build and tests
         run: ./gradlew --no-daemon clean build
         env:
